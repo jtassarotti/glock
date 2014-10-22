@@ -1,4 +1,4 @@
-#define NUM_THREADS 16
+#define NUM_THREADS 8
 #define BATCH_SIZE 8
 
 #define NUM_LOCKS 4096
