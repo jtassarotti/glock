@@ -80,6 +80,7 @@ void *reader( void *ptr)
 
 	/** < Total number of iterations (for measurement) */
 	int num_iters = 0;
+	srand(tid);
 
 	clock_gettime(CLOCK_REALTIME, &start);
 
@@ -97,9 +98,7 @@ void *reader( void *ptr)
 		}
 
 		for(I = 0; I < BATCH_SIZE; I ++) {
-			for(i = 0; i < COMPUTE; i ++) {
-				node_id[I] = fastrand(&seed) & NUM_NODES_;
-			}
+			node_id[I] = rand() & NUM_NODES_;
 			lock_id[I] = node_id[I] & NUM_LOCKS_;
 			__builtin_prefetch(&locks[lock_id[I]], 0, 0);
 		}
