@@ -1,0 +1,11 @@
+#define NUM_THREADS 8
+
+#define NUM_LOCKS 4096
+#define NUM_LOCKS_ (NUM_LOCKS - 1)
+
+#define NUM_NODES (128 * 1024 * 1024)
+#define NUM_NODES_ (NUM_NODES - 1)
+
+#define ITERS_PER_MEASUREMENT 100000
+
+#define COMPUTE 3
