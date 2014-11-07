@@ -1,5 +1,0 @@
-simple.c and glock.c run NUM_THREADS threads. 
-
-The thread-to-core asssignment is controlled from the simple.sh and glock.sh 
-files by using taskset.
-

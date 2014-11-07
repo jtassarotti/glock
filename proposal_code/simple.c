@@ -22,7 +22,7 @@ typedef struct {
 void *reader(void *ptr);
 void *writer(void *ptr);
 
-/** < Only shared variables here */
+/**< Only shared variables here */
 node_t *nodes;
 lock_t *locks;
 
@@ -32,10 +32,10 @@ int main()
 	int tid[NUM_THREADS];
 	pthread_t thread[NUM_THREADS];
 
-	/** < Ensure that locks are cacheline aligned */
+	/**< Ensure that locks are cacheline aligned */
 	assert(sizeof(lock_t) == 64);
 
-	/** < Allocate the shared nodes */
+	/**< Allocate the shared nodes */
 	red_printf("Allocting %d nodes\n", NUM_NODES);
 	nodes = (node_t *) malloc(NUM_NODES * sizeof(node_t));
 	assert(nodes != NULL);
@@ -45,7 +45,7 @@ int main()
 		nodes[i].b = nodes[i].a + 1;
 	}
 
-	/** < Allocate the striped spinlocks */
+	/**< Allocate the striped spinlocks */
 	red_printf("Allocting %d locks\n", NUM_LOCKS);
 	locks = (lock_t *) malloc(NUM_LOCKS * sizeof(lock_t));
 	assert(locks != NULL);
@@ -54,7 +54,7 @@ int main()
 		pthread_spin_init(&locks[i].lock, 0);
 	}
 	
-	/** < Launch several reader threads and a writer thread */
+	/**< Launch several threads */
 	for(i = 0; i < NUM_THREADS; i++) {
 		tid[i] = i;
 		red_printf("Launching reader thread with tid = %d\n", tid[i]);
@@ -68,17 +68,17 @@ int main()
 	exit(0);
 }
 
-void *reader( void *ptr)
+void *reader(void *ptr)
 {
 	struct timespec start, end;
 	int tid = *((int *) ptr);
 	uint64_t seed = 0xdeadbeef + tid;
 	int sum = 0, i;
 
-	/** < The node and lock to use in an iteration */
+	/**< The node and lock to use in an iteration */
 	int node_id, lock_id;
 
-	/** < Total number of iterations (for measurement) */
+	/**< Total number of iterations (for measurement) */
 	int num_iters = 0;
 	srand(tid);
 
@@ -102,10 +102,10 @@ void *reader( void *ptr)
 
 		pthread_spin_lock(&locks[lock_id].lock);
 		
-		/** < Critical section begin */
+		/**< Critical section begin */
 		nodes[node_id].a ++;
 		nodes[node_id].b ++;
-		/** < Critical section end */
+		/**< Critical section end */
 
 		pthread_spin_unlock(&locks[lock_id].lock);
 
