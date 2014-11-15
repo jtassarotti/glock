@@ -10,15 +10,22 @@ void cuckoo_init(int **keys, struct cuckoo_bkt **ht_index)
 	printf("\tInitializing cuckoo index of size = %lu bytes\n", 
 		NUM_BKT * sizeof(struct cuckoo_bkt));
 
-	int sid = shmget(CUCKOO_KEY, NUM_BKT * sizeof(struct cuckoo_bkt), 
-		IPC_CREAT | 0666 | SHM_HUGETLB);
+	//int sid = shmget(CUCKOO_KEY, NUM_BKT * sizeof(struct cuckoo_bkt), 
+	//	IPC_CREAT | 0666 | SHM_HUGETLB);
 
+	/*
 	if(sid < 0) {
 		printf("\tCould not create cuckoo hash index\n");
 		exit(-1);
 	}
+	*/
 
-	*ht_index = shmat(sid, 0, 0);
+	*ht_index = (struct cuckoo_bkt *) malloc(NUM_BKT * sizeof(struct cuckoo_bkt));
+	if(*ht_index == NULL) {
+		printf("\tCould not create cuckoo hash index\n");
+		exit(-1);
+	}
+	//*ht_index = shmat(sid, 0, 0);
 	memset((char *) *ht_index, 0, NUM_BKT * sizeof(struct cuckoo_bkt));
 
 	/** < Allocate the packets and put them into the hash index randomly */

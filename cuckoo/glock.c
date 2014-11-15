@@ -97,7 +97,7 @@ void *cuckoo_thread(void *ptr)
 			bkt_1[I] = __hash(key[I]) & NUM_BKT_;
 			lock_id[I] = bkt_1[I] & NUM_LOCKS_;
 			__builtin_prefetch(&ht_index[bkt_1[I]], 0, 0);
-			__builtin_prefetch(&locks[lock_id[I]], 0, 0);
+			//__builtin_prefetch(&locks[lock_id[I]], 0, 0);
 		}
 			
 		/**< Try the 1st bucket. If it fails, issue prefetch for bkt #2 */
@@ -121,7 +121,7 @@ void *cuckoo_thread(void *ptr)
 				bkt_2[I] = __hash(bkt_1[I]) & NUM_BKT_;
 				lock_id[I] = bkt_2[I] & NUM_LOCKS_;
 				__builtin_prefetch(&ht_index[bkt_2[I]], 0, 0);
-				__builtin_prefetch(&locks[lock_id[I]], 0, 0);
+				//__builtin_prefetch(&locks[lock_id[I]], 0, 0);
 			}
 		}
 

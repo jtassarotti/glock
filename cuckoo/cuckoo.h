@@ -7,23 +7,31 @@
 #include <assert.h>
 #include "city.h"
 
-#define NUM_THREADS 8
+#define NUM_THREADS 40
 
 /**< Number of cuckoo buckets */
 /**< 256 KB: L2 cache */
 //#define NUM_BKT (4 * 1024)
 //#define NUM_BKT_ (NUM_BKT - 1)
 
+/**< 1 MB: L3 cache */
+#define NUM_BKT (16 * 1024)
+#define NUM_BKT_ (NUM_BKT - 1)
+
 /**< 16 MB: L3 cache */
 //#define NUM_BKT (256 * 1024)
 //#define NUM_BKT_ (NUM_BKT - 1)
 
 /**< 512 MB: RAM */
-#define NUM_BKT (8 * 1024 * 1024)
-#define NUM_BKT_ (NUM_BKT - 1)
+//#define NUM_BKT (8 * 1024 * 1024)
+//#define NUM_BKT_ (NUM_BKT - 1)
 
 /**< Number of locks for striping */
-#define NUM_LOCKS 4096
+//#define NUM_LOCKS 4096
+//#define NUM_LOCKS_ (NUM_LOCKS - 1)
+
+/* Smaller number of locks for 16MB buckets */
+#define NUM_LOCKS 1024
 #define NUM_LOCKS_ (NUM_LOCKS - 1)
 
 /**< Number of keys inserted into the hash table */

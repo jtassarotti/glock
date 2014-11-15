@@ -7,5 +7,6 @@ function blue() {
 
 blue ""
 blue "Running simple"
-shm-rm.sh 1>/dev/null 2>/dev/null
-sudo numactl --physcpubind=0-7 --localalloc ./glock
+#shm-rm.sh 1>/dev/null 2>/dev/null
+#sudo numactl --physcpubind=0-7 --localalloc ./glock
+./glock
